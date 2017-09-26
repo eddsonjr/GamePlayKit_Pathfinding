@@ -12,35 +12,43 @@ import GameplayKit
 
 class GameViewController: UIViewController {
 
+    private var sceneNode: GameScene!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Load 'GameScene.sks' as a GKScene. This provides gameplay related content
-        // including entities and graphs.
+        // Load 'GameScene.sks' as a GKScene.
         if let scene = GKScene(fileNamed: "GameScene") {
             
             // Get the SKScene from the loaded GKScene
             if let sceneNode = scene.rootNode as! GameScene? {
+                self.sceneNode = sceneNode
                 
-                // Copy gameplay related content over to the scene
-                sceneNode.entities = scene.entities
-                sceneNode.graphs = scene.graphs
+                self.sceneNode.entities = scene.entities // <-- entities loaded here
+                self.sceneNode.graphs = scene.graphs // <-- graphs loaded here
                 
-                // Set the scale mode to scale to fit the window
-                sceneNode.scaleMode = .aspectFill
-                
-                // Present the scene
                 if let view = self.view as! SKView? {
-                    view.presentScene(sceneNode)
+                   
                     
                     view.ignoresSiblingOrder = true
                     
                     view.showsFPS = true
                     view.showsNodeCount = true
+                    view.presentScene(sceneNode)
                 }
+
+                
             }
         }
     }
+    
+    
+    
+    
+    /*
+     self.sceneNode.entities = scene.entities // <-- entities loaded here
+     self.sceneNode.graphs = scene.graphs // <-- graphs loaded here
+     */
 
     override var shouldAutorotate: Bool {
         return true
@@ -63,3 +71,41 @@ class GameViewController: UIViewController {
         return true
     }
 }
+
+
+
+
+
+
+
+/*
+ override func viewDidLoad() {
+ super.viewDidLoad()
+ 
+ if let scene = GKScene(fileNamed: "GameScene") {
+ 
+ // Get the SKScene from the loaded GKScene
+ if let sceneNode = scene.rootNode as! GameScene? {
+ if let view = self.view as! SKView? {
+ view.presentScene(sceneNode)
+ 
+ view.ignoresSiblingOrder = true
+ 
+ view.showsFPS = true
+ view.showsNodeCount = true
+ 
+ sceneNode.graphs = scene.graphs
+ sceneNode.entities = scene.entities
+ }
+ 
+ 
+ }
+ 
+ }
+
+ 
+ 
+ 
+ 
+ 
+ */

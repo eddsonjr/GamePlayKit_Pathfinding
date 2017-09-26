@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD91A1941F7AE57800C1AA26 /* CGPoint_to_vectorfloat2d+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD91A1931F7AE57800C1AA26 /* CGPoint_to_vectorfloat2d+extension.swift */; };
 		ADB53DB21F79AC3100CF580C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB53DB11F79AC3100CF580C /* AppDelegate.swift */; };
 		ADB53DB41F79AC3100CF580C /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = ADB53DB31F79AC3100CF580C /* GameScene.sks */; };
 		ADB53DB61F79AC3100CF580C /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = ADB53DB51F79AC3100CF580C /* Actions.sks */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AD91A1931F7AE57800C1AA26 /* CGPoint_to_vectorfloat2d+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint_to_vectorfloat2d+extension.swift"; sourceTree = "<group>"; };
 		ADB53DAE1F79AC3100CF580C /* teste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teste.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADB53DB11F79AC3100CF580C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ADB53DB31F79AC3100CF580C /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -41,6 +43,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AD91A1921F7AE53400C1AA26 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AD91A1931F7AE57800C1AA26 /* CGPoint_to_vectorfloat2d+extension.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		ADB53DA51F79AC3000CF580C = {
 			isa = PBXGroup;
 			children = (
@@ -60,6 +70,7 @@
 		ADB53DB01F79AC3100CF580C /* teste */ = {
 			isa = PBXGroup;
 			children = (
+				AD91A1921F7AE53400C1AA26 /* Extensions */,
 				ADB53DB11F79AC3100CF580C /* AppDelegate.swift */,
 				ADB53DB31F79AC3100CF580C /* GameScene.sks */,
 				ADB53DB51F79AC3100CF580C /* Actions.sks */,
@@ -151,6 +162,7 @@
 				ADB53DB81F79AC3100CF580C /* GameScene.swift in Sources */,
 				ADB53DBA1F79AC3100CF580C /* GameViewController.swift in Sources */,
 				ADB53DB21F79AC3100CF580C /* AppDelegate.swift in Sources */,
+				AD91A1941F7AE57800C1AA26 /* CGPoint_to_vectorfloat2d+extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,6 +330,7 @@
 				ADB53DC81F79AC3100CF580C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
