@@ -17,7 +17,6 @@ extension CGPoint {
         x = CGFloat(point.x)
         y = CGFloat(point.y)
         
-        //talvez nao funcione
     }
 }
 
