@@ -16,6 +16,8 @@ extension CGPoint {
     init(_ point: float2) {
         x = CGFloat(point.x)
         y = CGFloat(point.y)
+        
+        //talvez nao funcione
     }
 }
 
