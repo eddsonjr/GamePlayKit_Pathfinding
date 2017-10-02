@@ -60,8 +60,8 @@ class GameScene: SKScene {
         StateHelper.temQueMijar = false
         
         
-        
-        
+
+
         
         
         
@@ -124,10 +124,10 @@ class GameScene: SKScene {
     
     
     override func update(_ currentTime: TimeInterval) {
-        //Controlando as operacoes do cachorro
         
         if StateHelper.podeChamarProximoEstado! {
             controlarCachorro()
+            
         }
         
         
@@ -175,7 +175,7 @@ class GameScene: SKScene {
     func botarNodesNaPilha() {
         
         
-        for node in stride(from: Int(((self.navigationGraph?.nodes?.count)!-1)), to: 0, by: -1){
+        for node in stride(from: Int(((self.navigationGraph?.nodes?.count)!-1)), to: 1, by: -1){
             let nodeFromGraph: GKGraphNode2D =  self.navigationGraph?.nodes![node] as! GKGraphNode2D
             self.nodeStack.push(CGPoint(nodeFromGraph.position))
             
@@ -214,6 +214,7 @@ class GameScene: SKScene {
     func controlarCachorro() {
         
         StateHelper.ponto = self.nodeStack.pop()
+        print("Proximo ponto: \(StateHelper.ponto) | Restantes: \(self.nodeStack.items.count)")
         
         //Entrando nos estados
         if machineState?.enter(Farejando.self) == false {
@@ -228,8 +229,6 @@ class GameScene: SKScene {
         if machineState?.enter(Andando.self) == false {
             print("Nao foi possivel entrar no estado de andar")
         }
-        
-        
         
     }
     
