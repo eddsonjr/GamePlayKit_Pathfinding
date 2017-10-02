@@ -17,7 +17,7 @@ class GameScene: SKScene {
     
     var player: SKSpriteNode?
     
-    var nodeStack = Stack<GKGraphNode2D>() //Responsavel por armazenar uma pilha contendo os nodes do grafo que esta na cena
+    var nodeStack = Stack<CGPoint>() //Responsavel por armazenar uma pilha contendo as posicoes dos nos do grafo que esta na tela.
 
     
     
@@ -33,10 +33,25 @@ class GameScene: SKScene {
         
         
         
+        //Colocando os pontos do grafo na pilha de pontos
+        botarNodesNaPilha()
+        
+        
+        //Configurando o cachorro
+        configCachorro()
+        
+        
+        
+        
+        
+        
+        
+        /*AS FUNCOES ABAIXO SAO DE TESTES ANTIGOS*/
+        
         //Pegando um no especifico
-        print("Retornando um nó especifico: \(String(describing: self.navigationGraph?.nodes?[1]))")
-        let testNode: GKGraphNode2D = self.navigationGraph?.nodes![0] as! GKGraphNode2D
-        print("Test Node position: \(CGPoint(testNode.position))")
+//        print("Retornando um nó especifico: \(String(describing: self.navigationGraph?.nodes?[1]))")
+//        let testNode: GKGraphNode2D = self.navigationGraph?.nodes![0] as! GKGraphNode2D
+//        print("Test Node position: \(CGPoint(testNode.position))")
         
         
         //setup player
@@ -132,9 +147,42 @@ class GameScene: SKScene {
     
     
     
+    //Mark: Esta funcao serve para pegar cada no do grafo, extrair o seu ponto (CGPoint) e colocar esse ponto em uma pilha, que sera usada posteriormente.
+    func botarNodesNaPilha() {
+        
+        
+        for node in stride(from: Int(((self.navigationGraph?.nodes?.count)!-1)), to: 0, by: -1){
+            let nodeFromGraph: GKGraphNode2D =  self.navigationGraph?.nodes![node] as! GKGraphNode2D
+            self.nodeStack.push(CGPoint(nodeFromGraph.position))
+            
+        }
+        
+        print("Quantidade de pontos para o cachorro passar: \(self.nodeStack.items.count)")
+        
+    }
     
     
     
     
+    //Mark: Esta funcao serve para configurar o sprite do cachorro e coloca-lo na primeira posicao do grafo (dando pop na pilha)
+    func configCachorro() {
+        
+        let texturaCachorro = SKTexture(image: #imageLiteral(resourceName: "Cachorro1"))
+        StateHelper.cachorro = SKSpriteNode(texture: texturaCachorro)
+        StateHelper.cachorro.size = texturaCachorro.size()
+        StateHelper.cachorro.alpha = 1.0
+        
+        //setando a posicao do cachorro (pegando a primeira posicao do grafo.
+        StateHelper.cachorro.position = self.nodeStack.pop()
+        
+        self.addChild(StateHelper.cachorro)
+        
+        
+    }
+    
+    
+    
+    
+
 
 }

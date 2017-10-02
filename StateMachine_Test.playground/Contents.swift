@@ -1,23 +1,17 @@
-//
-//  States.swift
-//  teste
-//
-//  Created by Edson  Jr on 29/09/17.
-//  Copyright © 2017 Edson  Jr. All rights reserved.
-//
+//: Playground - noun: a place where people can play
 
-import Foundation
+import UIKit
 import GameplayKit
 import SpriteKit
 
-
-class StateHelper {
+class Helper {
     static var temQueMijar: Bool!
-    static var cachorro: SKSpriteNode!
 }
 
 
 
+//Variavel para identificar se o animal tem que mijar ou nao
+Helper.temQueMijar = true
 
 
 class Girando: GKState {
@@ -29,7 +23,6 @@ class Girando: GKState {
     
     override func didEnter(from previousState: GKState?) {
         print("[STATE] >> Girando o cachorro")
-        
     }
     
     override func willExit(to nextState: GKState) {
@@ -54,7 +47,7 @@ class Andando: GKState {
     override func willExit(to nextState: GKState) {
         print("   >>Saindo do estado de Andando")
     }
-    
+
     
 }
 
@@ -83,7 +76,7 @@ class Farejando: GKState {
     
     
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {
-        if StateHelper.temQueMijar {
+        if Helper.temQueMijar {
             print("   >>Tem que mijar<<")
             return stateClass is Mijando.Type
         }else{
@@ -98,5 +91,80 @@ class Farejando: GKState {
     override func didEnter(from previousState: GKState?) {
         print("[STATE] >> Farejando")
     }
+    
+    
+    
+    
+    
 }
+
+
+
+
+
+//criando os estados
+let girando = Girando()
+let andando = Andando()
+let mijando = Mijando()
+let farejando = Farejando()
+
+
+
+//Criando a maquina de estados 
+let machineState: GKStateMachine = GKStateMachine(states: [farejando,girando,andando,mijando])
+
+
+//Entando nos estados
+
+if machineState.enter(Farejando.self) == false {
+    print("Nao foi possivel entrar no estado farejando")
+}
+if machineState.enter(Mijando.self) == false {
+    print("Nao foi possivel entrar no estado de mijando")
+}
+if machineState.enter(Girando.self) == false {
+    print("Nao foi possivel entrar no estado de girando")
+}
+if machineState.enter(Andando.self) == false {
+    print("Nao foi possivel entrar no estado de andar")
+}
+
+
+Helper.temQueMijar = false
+print("\n\n")
+print("Segunda rodada da maquina de estados")
+
+if machineState.enter(Farejando.self) == false {
+    print("Nao foi possivel entrar no estado farejando")
+}
+if machineState.enter(Mijando.self) == false {
+    print("Nao foi possivel entrar no estado de mijando")
+}
+if machineState.enter(Girando.self) == false {
+    print("Nao foi possivel entrar no estado de girando")
+}
+if machineState.enter(Andando.self) == false {
+    print("Nao foi possivel entrar no estado de andar")
+}
+
+
+
+
+
+
+
+
+
+//
+//if temQueMijar {
+//    
+//    print(machineState.currentState)
+//    
+//    if machineState.enter(Mijando.self) == false {
+//        print("Nao foi possivel fazer o cachorro mijar")
+//    }
+//}
+
+
+
 
