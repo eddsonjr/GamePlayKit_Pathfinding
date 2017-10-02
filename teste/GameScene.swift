@@ -214,7 +214,7 @@ class GameScene: SKScene {
     func controlarCachorro() {
         
         StateHelper.ponto = self.nodeStack.pop()
-        print("Proximo ponto: \(StateHelper.ponto) | Restantes: \(self.nodeStack.items.count)")
+        print("Proximo ponto: \(StateHelper.ponto) | Restantes: \(self.nodeStack.items.count) | Pode ir?: \(StateHelper.podeChamarProximoEstado))")
         
         //Entrando nos estados
         if machineState?.enter(Farejando.self) == false {
