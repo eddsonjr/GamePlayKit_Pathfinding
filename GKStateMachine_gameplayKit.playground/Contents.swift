@@ -47,7 +47,7 @@ var stateMachine: GKStateMachine?
 // Initialize the state machine
 stateMachine = GKStateMachine(states: [green, yellow, red])
 
-
+ 
 
 if stateMachine?.enter(Green.self) == false {
     print("failed to move to green")

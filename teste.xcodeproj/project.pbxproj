@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD16BD951F82C7B400DF2EF5 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD16BD941F82C7B400DF2EF5 /* Stack.swift */; };
+		AD2CEC281F7ECCEA003063CA /* States.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2CEC271F7ECCEA003063CA /* States.swift */; };
 		AD91A1941F7AE57800C1AA26 /* CGPoint_to_vectorfloat2d+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD91A1931F7AE57800C1AA26 /* CGPoint_to_vectorfloat2d+extension.swift */; };
 		ADB53DB21F79AC3100CF580C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB53DB11F79AC3100CF580C /* AppDelegate.swift */; };
 		ADB53DB41F79AC3100CF580C /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = ADB53DB31F79AC3100CF580C /* GameScene.sks */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AD16BD941F82C7B400DF2EF5 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		AD2CEC271F7ECCEA003063CA /* States.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = States.swift; sourceTree = "<group>"; };
 		AD91A1931F7AE57800C1AA26 /* CGPoint_to_vectorfloat2d+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint_to_vectorfloat2d+extension.swift"; sourceTree = "<group>"; };
 		ADB53DAE1F79AC3100CF580C /* teste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teste.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADB53DB11F79AC3100CF580C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +47,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AD2CEC261F7ECCBA003063CA /* StateMachine */ = {
+			isa = PBXGroup;
+			children = (
+				AD2CEC271F7ECCEA003063CA /* States.swift */,
+			);
+			name = StateMachine;
+			sourceTree = "<group>";
+		};
 		AD91A1921F7AE53400C1AA26 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -70,12 +82,14 @@
 		ADB53DB01F79AC3100CF580C /* teste */ = {
 			isa = PBXGroup;
 			children = (
+				AD2CEC261F7ECCBA003063CA /* StateMachine */,
 				AD91A1921F7AE53400C1AA26 /* Extensions */,
 				ADB53DB11F79AC3100CF580C /* AppDelegate.swift */,
 				ADB53DB31F79AC3100CF580C /* GameScene.sks */,
 				ADB53DB51F79AC3100CF580C /* Actions.sks */,
 				ADB53DB71F79AC3100CF580C /* GameScene.swift */,
 				ADB53DB91F79AC3100CF580C /* GameViewController.swift */,
+				AD16BD941F82C7B400DF2EF5 /* Stack.swift */,
 				ADB53DBB1F79AC3100CF580C /* Main.storyboard */,
 				ADB53DBE1F79AC3100CF580C /* Assets.xcassets */,
 				ADB53DC01F79AC3100CF580C /* LaunchScreen.storyboard */,
@@ -159,9 +173,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD2CEC281F7ECCEA003063CA /* States.swift in Sources */,
 				ADB53DB81F79AC3100CF580C /* GameScene.swift in Sources */,
 				ADB53DBA1F79AC3100CF580C /* GameViewController.swift in Sources */,
 				ADB53DB21F79AC3100CF580C /* AppDelegate.swift in Sources */,
+				AD16BD951F82C7B400DF2EF5 /* Stack.swift in Sources */,
 				AD91A1941F7AE57800C1AA26 /* CGPoint_to_vectorfloat2d+extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
