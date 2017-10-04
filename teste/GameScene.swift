@@ -27,16 +27,22 @@ class GameScene: SKScene {
     let mijando = Mijando()
     let farejando = Farejando()
     
-    
+
     //Maquina de estados
     var machineState: GKStateMachine? = nil
-    
+    var queue = DispatchQueue(label: "com.teste")
     
     
     
     override func didMove(to view: SKView) {
         print("Inside didMove...")
         
+        
+        girando.stateDelegate = self
+        andando.stateDelegate = self
+        farejando.stateDelegate = self
+        
+        //StateHelper.stateInAction = true
         
         //Suporte ao grafo desenhado na cena do spritekit
         self.navigationGraph = self.graphs.values.first
@@ -54,13 +60,16 @@ class GameScene: SKScene {
         
         
         //Inicializando a maquina de estados
-        self.machineState = GKStateMachine(states: [farejando,girando,andando,mijando,andando])
+        self.machineState = GKStateMachine(states: [farejando,girando,andando,mijando])
         
         //Setando para o cachorro nao mijar
         StateHelper.temQueMijar = false
         
         
-        controlarCachorro()
+        
+        
+        
+        
         
         
         
@@ -124,6 +133,11 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         
+        if !StateHelper.stateInAction {
+            controlarCachorro()
+            StateHelper.stateInAction = true
+        }
+       
         
     }
     
@@ -207,22 +221,30 @@ class GameScene: SKScene {
     func controlarCachorro() {
         
         
-        if StateHelper.podeChamarProximoEstado! {
+//        queue.sync {
+//            if machineState?.enter(Farejando.self) == false{
+//                 print("Nao foi possivel entrar no estado farejando")
+//            }
+//        }
+//        
+//        
+        
+        
+        
+        
             //Entrando nos estados
-            if machineState?.enter(Farejando.self) == false  {
+            if machineState?.enter(Farejando.self) == false   {
                 print("Nao foi possivel entrar no estado farejando")
             }
-            if machineState?.enter(Mijando.self) == false  {
-                print("Nao foi possivel entrar no estado de mijando")
-            }
-            if machineState?.enter(Girando.self) == false  {
-                print("Nao foi possivel entrar no estado de girando")
-            }
-            if machineState?.enter(Andando.self) == false  {
-                print("Nao foi possivel entrar no estado de andar")
-            }
-
-        }
+//            if machineState?.enter(Mijando.self) == false && StateHelper.podeChamarProximoEstado!  {
+//                print("Nao foi possivel entrar no estado de mijando")
+//            }
+//            if machineState?.enter(Girando.self) == false  && StateHelper.podeChamarProximoEstado! {
+//                print("Nao foi possivel entrar no estado de girando")
+//            }
+//            if machineState?.enter(Andando.self) == false  && StateHelper.podeChamarProximoEstado! {
+//                print("Nao foi possivel entrar no estado de andar")
+//            }
         
         
         
@@ -234,4 +256,33 @@ class GameScene: SKScene {
 //            print("Proximo ponto: \(StateHelper.ponto) | Restantes: \(self.nodeStack.items.count) | Pode ir?: \(StateHelper.podeChamarProximoEstado))")
 //
     }
+    
+    
+    
+}
+
+
+extension GameScene: StateDelegate {
+    
+    func stateDelegateSuccess(_ state: GKState) {
+        if state == farejando {
+            print("Deu sucesso no farejando")
+            if machineState?.enter(Girando.self) == false{
+                print("Indo para o estado girando...")
+            }
+        }else if state == girando{
+            print("Deu sucfesso no girando")
+            if machineState?.enter(Andando.self) == false {
+                print("Indo para o estado de andando...")
+            }
+        }else if state == andando {
+            print("Deu sucesso no andando")
+        }
+    }
+    
+    
+    func stateDelegateFail(_ state: GKState) {
+        
+    }
+    
 }
