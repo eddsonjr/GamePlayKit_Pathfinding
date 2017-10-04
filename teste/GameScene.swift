@@ -54,14 +54,13 @@ class GameScene: SKScene {
         
         
         //Inicializando a maquina de estados
-        self.machineState = GKStateMachine(states: [farejando,girando,andando,mijando])
+        self.machineState = GKStateMachine(states: [farejando,girando,andando,mijando,andando])
         
         //Setando para o cachorro nao mijar
         StateHelper.temQueMijar = false
         
         
-
-
+        controlarCachorro()
         
         
         
@@ -124,12 +123,6 @@ class GameScene: SKScene {
     
     
     override func update(_ currentTime: TimeInterval) {
-        
-        if StateHelper.podeChamarProximoEstado! {
-            controlarCachorro()
-            
-        }
-        
         
         
     }
@@ -213,26 +206,32 @@ class GameScene: SKScene {
     //Mark: Esta funcao serve para manipular o animal, fazendo ele andar e controlando seus estados
     func controlarCachorro() {
         
-        StateHelper.ponto = self.nodeStack.pop()
-        print("Proximo ponto: \(StateHelper.ponto) | Restantes: \(self.nodeStack.items.count) | Pode ir?: \(StateHelper.podeChamarProximoEstado))")
         
-        //Entrando nos estados
-        if machineState?.enter(Farejando.self) == false {
-            print("Nao foi possivel entrar no estado farejando")
-        }
-        if machineState?.enter(Mijando.self) == false {
-            print("Nao foi possivel entrar no estado de mijando")
-        }
-        if machineState?.enter(Girando.self) == false {
-            print("Nao foi possivel entrar no estado de girando")
-        }
-        if machineState?.enter(Andando.self) == false {
-            print("Nao foi possivel entrar no estado de andar")
+        if StateHelper.podeChamarProximoEstado! {
+            //Entrando nos estados
+            if machineState?.enter(Farejando.self) == false  {
+                print("Nao foi possivel entrar no estado farejando")
+            }
+            if machineState?.enter(Mijando.self) == false  {
+                print("Nao foi possivel entrar no estado de mijando")
+            }
+            if machineState?.enter(Girando.self) == false  {
+                print("Nao foi possivel entrar no estado de girando")
+            }
+            if machineState?.enter(Andando.self) == false  {
+                print("Nao foi possivel entrar no estado de andar")
+            }
+
         }
         
+        
+        
+        
+        
+        
+//        if StateHelper.podeChamarProximoEstado! {
+//            StateHelper.ponto = self.nodeStack.pop()
+//            print("Proximo ponto: \(StateHelper.ponto) | Restantes: \(self.nodeStack.items.count) | Pode ir?: \(StateHelper.podeChamarProximoEstado))")
+//
     }
-    
-    
-
-
 }

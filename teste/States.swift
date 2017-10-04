@@ -25,26 +25,25 @@ class StateHelper {
 class Girando: GKState {
     
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {
-        StateHelper.podeChamarProximoEstado = false
         return stateClass is Andando.Type
     }
     
     
     override func didEnter(from previousState: GKState?) {
         print("[STATE] >> Girando o cachorro")
+        let deadlineTime = DispatchTime.now() + .seconds(2)
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+            print("Ja executou o didEnter do girando")
+        }
+
         
-        
-        
-        //Animacao do cachorro girando...
-        let rotateAnimation = SKAction.rotate(toAngle: CGFloat(45), duration: 2.0)
-        StateHelper.cachorro.run(rotateAnimation, completion: {
-            StateHelper.podeChamarProximoEstado = true
-        })
+
         
     }
     
     override func willExit(to nextState: GKState) {
         print("   >>Saindo do estado de girando")
+
         
        
     }
@@ -57,27 +56,25 @@ class Girando: GKState {
 class Andando: GKState {
     
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {
-        StateHelper.podeChamarProximoEstado = false
         return stateClass is Farejando.Type
     }
     
     
     override func didEnter(from previousState: GKState?) {
         print("[STATE] >> O cachorro andando.")
-       
         
-        //Animacao do cachorro andando 
-        let moveAnimation = SKAction.move(to: StateHelper.ponto!, duration: 2.0)
-        StateHelper.cachorro.run(moveAnimation, completion: {
-            StateHelper.podeChamarProximoEstado = true
-            
-        })
+        let deadlineTime = DispatchTime.now() + .seconds(2)
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+            print("Ja executou o didEnter do andando")
+        }
+
+       
+
     }
     
     
     override func willExit(to nextState: GKState) {
         print("   >>Saindo do estado de Andando")
-        
 
        
     }
@@ -90,23 +87,24 @@ class Andando: GKState {
 class Mijando: GKState {
     
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {
-        StateHelper.podeChamarProximoEstado = false
+       
         return stateClass is Girando.Type
     }
     
     
     override func didEnter(from previousState: GKState?) {
-        print("[STATE] >> Mijando...")
-        StateHelper.podeChamarProximoEstado = true
-       
-        
-        
+        let deadlineTime = DispatchTime.now() + .seconds(2)
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+            print("Ja executou o didEnter do mijando")
+        }
+
         
     }
     
     
     override func willExit(to nextState: GKState) {
         print("   >>Saindo do estado de mijando")
+      
         
     }
     
@@ -117,7 +115,6 @@ class Farejando: GKState {
     
     
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {
-         StateHelper.podeChamarProximoEstado = false
         if StateHelper.temQueMijar {
             print("   >>Tem que mijar<<")
             return stateClass is Mijando.Type
@@ -132,25 +129,18 @@ class Farejando: GKState {
     
     override func didEnter(from previousState: GKState?) {
         print("[STATE] >> Farejando")
-       
+        
         let deadlineTime = DispatchTime.now() + .seconds(2)
         DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-          print("   >>Farejando...")
-          StateHelper.podeChamarProximoEstado = true
-          
-
-            
+            print("Ja executou o didEnter do farejando")
         }
-
-        
         
     }
     
     
     override func willExit(to nextState: GKState) {
-        print("   >> Saindo do estado de farejando")
-       
-       
+        print("   >> Saindo do estado de farejando. ")
+        
     }
 }
 
