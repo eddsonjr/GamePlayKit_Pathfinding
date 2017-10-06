@@ -139,9 +139,7 @@ class Farejando: GKState {
     
     override func didEnter(from previousState: GKState?) {
         print("[STATE] >> Farejando ")
-        
-        //Pegando o proximo ponto do path no qual o cachorro tem que passar
-        StateHelper.nextPoint = StateHelper.nodeStack.pop()
+    
         
         /*Verificar se e cabivel alguma animacao ou somente o delay aqui*/
         let deadlineTime = DispatchTime.now() + .seconds(3)
@@ -155,6 +153,9 @@ class Farejando: GKState {
     }
     override func willExit(to nextState: GKState) {
         print("   >> Saindo do estado de farejando. ")
+        //Pegando o proximo ponto do path no qual o cachorro tem que passar
+        StateHelper.nextPoint = StateHelper.nodeStack.pop()
+
         
     }
 }
