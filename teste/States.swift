@@ -21,9 +21,8 @@ protocol StateDelegate: class {
 class StateHelper {
     static var temQueMijar: Bool = false
     static var cachorro: SKSpriteNode!
-    static var stateInAction: Bool = false
     static var nodeStack = Stack<CGPoint>()
-    static var irProximoPonto: Bool = false
+    static var nextPoint: CGPoint? = nil
 }
 
 
@@ -41,21 +40,22 @@ class Girando: GKState {
     
     override func didEnter(from previousState: GKState?) {
         print("[STATE] >> Girando ")
+        
         //Animacao do cachorro girando...
         let rotateAnimation = SKAction.rotate(toAngle: CGFloat(45), duration: 2.0)
         StateHelper.cachorro.run(rotateAnimation, completion: {
             print("Terminou a animacao de girar o cachorro..")
-            self.stateDelegate?.stateDelegateSuccess(self)
+            self.stateDelegate?.stateDelegateSuccess(self) //retorna o delegate dele para conseguir ir para o proximo estado
             
         })
 
         
     }
     
+    
+    
     override func willExit(to nextState: GKState) {
         print("   >>Saindo do estado de girando")
-       
-       
     }
     
 }
@@ -78,10 +78,10 @@ class Andando: GKState {
         
         
         //Animacao do cachorro andando
-        let moveAnimation = SKAction.move(to: StateHelper.nodeStack.pop(), duration: 2.0)
+        let moveAnimation = SKAction.move(to: StateHelper.nextPoint!, duration: 2.0)
         StateHelper.cachorro.run(moveAnimation, completion: {
              print("Terminou a animacao de Andar")
-             self.stateDelegate?.stateDelegateSuccess(self)
+             self.stateDelegate?.stateDelegateSuccess(self) //retorna o delegate dele para conseguir ir para o proximo estado
         })
     }
     
@@ -107,19 +107,13 @@ class Mijando: GKState {
     
     override func didEnter(from previousState: GKState?) {
         print("[STATE] >> Mijando")
-        
-        
-         self.stateDelegate?.stateDelegateSuccess(self)
-     
-        
-        
+        /*Falta a animacao do xixi sendo feito*/
+        self.stateDelegate?.stateDelegateSuccess(self) //retorna o delegate dele para conseguir ir para o proximo estado
     }
     
     
     override func willExit(to nextState: GKState) {
         print("   >>Saindo do estado de mijando")
-      
-        
     }
     
 }
@@ -146,18 +140,19 @@ class Farejando: GKState {
     override func didEnter(from previousState: GKState?) {
         print("[STATE] >> Farejando ")
         
+        //Pegando o proximo ponto do path no qual o cachorro tem que passar
+        StateHelper.nextPoint = StateHelper.nodeStack.pop()
+        
+        /*Verificar se e cabivel alguma animacao ou somente o delay aqui*/
         let deadlineTime = DispatchTime.now() + .seconds(3)
         DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
             print("   >>Terminou de farejar...")
-          
-            self.stateDelegate?.stateDelegateSuccess(self)
+            self.stateDelegate?.stateDelegateSuccess(self) //retorna o delegate dele para conseguir ir para o proximo estado
         }
         
        
         
     }
-    
-    
     override func willExit(to nextState: GKState) {
         print("   >> Saindo do estado de farejando. ")
         
