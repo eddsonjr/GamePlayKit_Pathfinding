@@ -19,6 +19,8 @@
 		ADB53DBD1F79AC3100CF580C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADB53DBB1F79AC3100CF580C /* Main.storyboard */; };
 		ADB53DBF1F79AC3100CF580C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADB53DBE1F79AC3100CF580C /* Assets.xcassets */; };
 		ADB53DC21F79AC3100CF580C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADB53DC01F79AC3100CF580C /* LaunchScreen.storyboard */; };
+		ADC70BB81F871A2C0004E7A8 /* SCLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC70BB71F871A2C0004E7A8 /* SCLExtensions.swift */; };
+		ADC70BBA1F871A350004E7A8 /* SCLAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC70BB91F871A350004E7A8 /* SCLAlertView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		ADB53DBE1F79AC3100CF580C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ADB53DC11F79AC3100CF580C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ADB53DC31F79AC3100CF580C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ADC70BB71F871A2C0004E7A8 /* SCLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLExtensions.swift; sourceTree = "<group>"; };
+		ADC70BB91F871A350004E7A8 /* SCLAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLAlertView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,7 @@
 		AD91A1921F7AE53400C1AA26 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				ADC70BB71F871A2C0004E7A8 /* SCLExtensions.swift */,
 				AD91A1931F7AE57800C1AA26 /* CGPoint_to_vectorfloat2d+extension.swift */,
 			);
 			name = Extensions;
@@ -97,6 +102,7 @@
 				ADB53DC01F79AC3100CF580C /* LaunchScreen.storyboard */,
 				ADB53DC31F79AC3100CF580C /* Info.plist */,
 				AD24E35E1F85666200238BF1 /* Trecho de codigos */,
+				ADC70BB91F871A350004E7A8 /* SCLAlertView.swift */,
 			);
 			path = teste;
 			sourceTree = "<group>";
@@ -178,6 +184,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD2CEC281F7ECCEA003063CA /* States.swift in Sources */,
+				ADC70BB81F871A2C0004E7A8 /* SCLExtensions.swift in Sources */,
+				ADC70BBA1F871A350004E7A8 /* SCLAlertView.swift in Sources */,
 				ADB53DB81F79AC3100CF580C /* GameScene.swift in Sources */,
 				ADB53DBA1F79AC3100CF580C /* GameViewController.swift in Sources */,
 				ADB53DB21F79AC3100CF580C /* AppDelegate.swift in Sources */,

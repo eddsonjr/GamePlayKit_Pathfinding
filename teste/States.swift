@@ -19,7 +19,7 @@ protocol StateDelegate: class {
 
 
 class StateHelper {
-    static var temQueMijar: Bool!
+    static var temQueMijar: Bool = false
     static var cachorro: SKSpriteNode!
     static var stateInAction: Bool = false
     static var nodeStack = Stack<CGPoint>()
@@ -44,6 +44,7 @@ class Girando: GKState {
         //Animacao do cachorro girando...
         let rotateAnimation = SKAction.rotate(toAngle: CGFloat(45), duration: 2.0)
         StateHelper.cachorro.run(rotateAnimation, completion: {
+            print("Terminou a animacao de girar o cachorro..")
             self.stateDelegate?.stateDelegateSuccess(self)
             
         })
@@ -79,6 +80,7 @@ class Andando: GKState {
         //Animacao do cachorro andando
         let moveAnimation = SKAction.move(to: StateHelper.nodeStack.pop(), duration: 2.0)
         StateHelper.cachorro.run(moveAnimation, completion: {
+             print("Terminou a animacao de Andar")
              self.stateDelegate?.stateDelegateSuccess(self)
         })
     }
@@ -96,7 +98,7 @@ class Andando: GKState {
 
 class Mijando: GKState {
     
-      weak var stateDelegate: StateDelegate?
+    weak var stateDelegate: StateDelegate?
     
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {
         return stateClass is Girando.Type
@@ -106,13 +108,26 @@ class Mijando: GKState {
     override func didEnter(from previousState: GKState?) {
         print("[STATE] >> Mijando")
         
-        let deadlineTime = DispatchTime.now() + .seconds(2)
-        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-            print("   >>MIJANDO...")
+        
+        
+        /*Talvez o alerta do botao nao possa ficar aqui*/
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: false
+        )
+        let alert = SCLAlertView(appearance: appearance)
+        alert.addButton(NSLocalizedString("Ok", comment: "Ok"), action: {
+            print("Botao do alerta do xixi pressionado!")
+            StateHelper.temQueMijar = false
+            StateHelper.stateInAction = false
             self.stateDelegate?.stateDelegateSuccess(self)
             
-        }
+            
+        })
+        
+        alert.showWarning(NSLocalizedString("Oops!", comment: "Opa!"), subTitle: NSLocalizedString("Your pet peed out of the crib. You must take an action.", comment: "O seu pet fez xixi fora do berço. Você deve fazer uma ação."))
+        
 
+        
         
     }
     
@@ -149,7 +164,8 @@ class Farejando: GKState {
         
         let deadlineTime = DispatchTime.now() + .seconds(3)
         DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-            print("   >>Farejando...")
+            print("   >>Terminou de farejar...")
+          
             self.stateDelegate?.stateDelegateSuccess(self)
         }
         

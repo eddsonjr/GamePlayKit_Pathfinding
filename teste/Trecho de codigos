@@ -161,3 +161,192 @@ StateHelper.podeChamarProximoEstado = true
 }
 }
 
+
+
+
+
+
+
+
+
+/*AS FUNCOES ABAIXO SAO DE TESTES ANTIGOS*/
+
+//Pegando um no especifico
+//        print("Retornando um nó especifico: \(String(describing: self.navigationGraph?.nodes?[1]))")
+//        let testNode: GKGraphNode2D = self.navigationGraph?.nodes![0] as! GKGraphNode2D
+//        print("Test Node position: \(CGPoint(testNode.position))")
+
+
+//setup player
+//        self.player = self.childNode(withName: "player") as? SKSpriteNode
+//        self.player?.position = CGPoint(testNode.position)
+
+
+//Tentando animar o personagem andando
+//movePlayer(to: CGPoint(testNode.position), totalOfPoints: (self.navigationGraph?.nodes?.count)!, current: 1)
+
+
+
+
+
+
+
+
+//Mark: Funcao para fazer o personagem caminhar pelo grafo (usando animacao e nao GKAgent2D) - ESTA É UMA FUNCAO SOMENTE DE TESTES
+//    func movePlayer(to: CGPoint, totalOfPoints: Int, current: Int){
+//        print("MOVENDO O PLAYER. Current: \(current) | Total: \(totalOfPoints)")
+//
+//        if current >= totalOfPoints{
+//            print("Processo de caminhada do personagem terminado")
+//            return
+//        }
+//
+//
+//        let eTime = DispatchTime.now() + .seconds(2)
+//        let moveAnimation = SKAction.move(to: to, duration: 2.5)
+//        DispatchQueue.main.asyncAfter(deadline: eTime) {
+//            print("Movendo para o ponto: \(to)")
+//            self.player?.run(moveAnimation, completion: {
+//                print("Animacao terminada")
+//
+//                let graphNode: GKGraphNode2D = (self.navigationGraph?.nodes![current] as? GKGraphNode2D)!
+//                let graphNodePosition = CGPoint(graphNode.position)
+//                let next = current + 1
+//
+//                self.movePlayer(to: graphNodePosition, totalOfPoints: (self.navigationGraph?.nodes?.count)!, current: next)
+//
+//            })
+//        }
+//    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+extension GameScene: StateDelegate {
+
+func stateDelegateSuccess(_ state: GKState) {
+
+
+if !StateHelper.nodeStack.IsEmpty(){
+
+
+switch state {
+case farejando:
+print("Deu sucesso no farejando. Verificando se tem que mijar ou nao...")
+if StateHelper.temQueMijar {
+print("Tem que mijar neste ponto. Chamando o estado de mijar...")
+if machineState?.enter(Mijando.self) == false {
+print("Nao foi possivel entrar no estado de mijando. Talvez nao tenha que fazer neste ponto...")
+}else{
+if machineState?.enter(Girando.self) == false {
+print("Nao foi possivel entrar no estado de girando...")
+}
+}
+}
+
+case girando:
+print("Deu sucesso no girando. Chamando o estado de andar... ")
+if machineState?.enter(Andando.self) == false{
+print("Nao foi possivel entrar no estao de girar")
+}
+case andando:
+print("Deu sucesso no andando. Chamando o estado de farejando...")
+if machineState?.enter(Farejando.self) == false {
+print("Nao foi possivel entrar no estado de andar")
+}
+
+default:
+print("Nao foi possivel entrar no proximo estado apos o \(state))")
+}
+
+}else {
+print("TERMINADO OS PONTOS QUE O CACHORRO DEVERIA PASSAR....")
+}
+
+
+
+
+
+
+//        if !StateHelper.nodeStack.IsEmpty() {
+//            if state == farejando {
+//                print("Deu sucesso no farejando")
+//                if StateHelper.temQueMijar {
+//                    if machineState?.enter(Mijando.self) == false {
+//                        print("Nao foi possivel entrar no estao de mijando")
+//                    }else{
+//                        if machineState?.enter(Girando.self) == false {
+//                            print("Nao foi possivel entrar no estado de girando")
+//                        }
+//                    }
+//                } //fecha o if tem que mijar
+//            }else if state == girando {
+//                print("Deu sucfesso no girando")
+//                if machineState?.enter(Andando.self) == false {
+//                    print("Indo para o estado de andando...")
+//                }
+//            } else if state == andando {
+//                if machineState?.enter(Farejando.self) == false {
+//                    print("Indo para o estado de farejando novamente...")
+//                }
+//            }
+//        }else {
+//            print("TERMINARAM OS PONTOS....")
+//        }
+//
+
+
+
+//        if !StateHelper.nodeStack.IsEmpty(){
+//
+//            if state == farejando {
+//                print("Deu sucesso no farejando")
+//                if machineState?.enter(Girando.self) == false{
+//                    print("Indo para o estado girando...")
+//                }else if state == mijando {
+//                    print("Indo para o estado de mijando...")
+//                    if machineState?.enter(Mijando.self) == false {
+//                        print("Deu sucesso no mijando...")
+//                    }
+//                    StateHelper.temQueMijar = false
+//                }
+//            }else if state == girando{
+//                print("Deu sucfesso no girando")
+//                if machineState?.enter(Andando.self) == false {
+//                    print("Indo para o estado de andando...")
+//                }
+//            }else if state == andando {
+//                print("Deu sucesso no andando")
+//                if machineState?.enter(Farejando.self) == false {
+//                    print("Indo para o estado de farejando novamente...")
+//                }
+//            }
+//        }else {
+//            print("TERMINADO OS PONTOS QUE O CACHORRO DEVERIA PASSAR...")
+//        }
+}
+
+
+
+
+func stateDelegateFail(_ state: GKState) {
+
+}
+
+}
+
+
+

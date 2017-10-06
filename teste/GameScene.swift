@@ -28,8 +28,6 @@ class GameScene: SKScene {
 
     //Maquina de estados
     var machineState: GKStateMachine? = nil
-    var queue = DispatchQueue(label: "com.teste")
-    
     
     
     override func didMove(to view: SKView) {
@@ -59,33 +57,15 @@ class GameScene: SKScene {
         //Inicializando a maquina de estados
         self.machineState = GKStateMachine(states: [farejando,girando,andando,mijando])
         
-        //Setando para o cachorro nao mijar
-        StateHelper.temQueMijar = true
         
-        
-        
-        
-        
-        
-        
-        
-        
-        /*AS FUNCOES ABAIXO SAO DE TESTES ANTIGOS*/
-        
-        //Pegando um no especifico
-//        print("Retornando um nó especifico: \(String(describing: self.navigationGraph?.nodes?[1]))")
-//        let testNode: GKGraphNode2D = self.navigationGraph?.nodes![0] as! GKGraphNode2D
-//        print("Test Node position: \(CGPoint(testNode.position))")
-        
-        
-        //setup player
-//        self.player = self.childNode(withName: "player") as? SKSpriteNode
-//        self.player?.position = CGPoint(testNode.position)
-        
-        
-        //Tentando animar o personagem andando
-       //movePlayer(to: CGPoint(testNode.position), totalOfPoints: (self.navigationGraph?.nodes?.count)!, current: 1)
+        if !StateHelper.stateInAction {
+                if machineState?.enter(Farejando.self) == false {
+                    print("Deu erro ao entrar no estado de farejando. Nao foi possivel entrar nele.")
+                }
+            StateHelper.stateInAction = true
+        }
 
+        
         
         
     }
@@ -130,49 +110,23 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         
-        if !StateHelper.stateInAction {
-            //controlarCachorro()
-            if machineState?.enter(Farejando.self) == false {
-                print("Deu erro ao entrar no estado de farejando. Nao foi possivel entrar nele.")
-            }
-            StateHelper.stateInAction = true
-        }
-    }
-    
-    
-    
-    
-    
-    
-    
-    //Mark: Funcao para fazer o personagem caminhar pelo grafo (usando animacao e nao GKAgent2D) - ESTA É UMA FUNCAO SOMENTE DE TESTES
-//    func movePlayer(to: CGPoint, totalOfPoints: Int, current: Int){
-//        print("MOVENDO O PLAYER. Current: \(current) | Total: \(totalOfPoints)")
-//        
-//        if current >= totalOfPoints{
-//            print("Processo de caminhada do personagem terminado")
-//            return
+//        if StateHelper.nodeStack.items.count == 3 {
+//            print("TESTE DE MIJANDO, FAZENDO O CACHORRO MIJAR > Estado atual: \(machineState?.currentState)")
+//            StateHelper.temQueMijar = true
+//            StateHelper.stateInAction = true
 //        }
+        
+        
 //        
-//        
-//        let eTime = DispatchTime.now() + .seconds(2)
-//        let moveAnimation = SKAction.move(to: to, duration: 2.5)
-//        DispatchQueue.main.asyncAfter(deadline: eTime) {
-//            print("Movendo para o ponto: \(to)")
-//            self.player?.run(moveAnimation, completion: {
-//                print("Animacao terminada")
-//                
-//                let graphNode: GKGraphNode2D = (self.navigationGraph?.nodes![current] as? GKGraphNode2D)!
-//                let graphNodePosition = CGPoint(graphNode.position)
-//                let next = current + 1
-//                
-//                self.movePlayer(to: graphNodePosition, totalOfPoints: (self.navigationGraph?.nodes?.count)!, current: next)
-//                
-//            })
+//        if !StateHelper.stateInAction {
+//            //controlarCachorro()
+//            if machineState?.enter(Farejando.self) == false {
+//                print("Deu erro ao entrar no estado de farejando. Nao foi possivel entrar nele.")
+//            }
+//            StateHelper.stateInAction = true
 //        }
 //    }
-    
-    
+    }
     
     
     
@@ -243,16 +197,17 @@ extension GameScene: StateDelegate {
             switch state {
             case farejando:
                 print("Deu sucesso no farejando. Verificando se tem que mijar ou nao...")
-                if StateHelper.temQueMijar {
+                if StateHelper.temQueMijar { //verifica se tem que mijar neste ponto
                     print("Tem que mijar neste ponto. Chamando o estado de mijar...")
-                    if machineState?.enter(Mijando.self) == false {
+                    if machineState?.enter(Mijando.self) == false { //se tiver que mijar, entra no estao de mijando
                         print("Nao foi possivel entrar no estado de mijando. Talvez nao tenha que fazer neste ponto...")
-                    }else{
-                        if machineState?.enter(Girando.self) == false {
-                            print("Nao foi possivel entrar no estado de girando...")
-                        }
+                    }
+                }else{
+                    if machineState?.enter(Girando.self) == false { //caso contrario passa para o estado de girando.
+                        print("Nao foi possivel entrar no estado de girando...")
                     }
                 }
+
                 
             case girando:
                 print("Deu sucesso no girando. Chamando o estado de andar... ")
@@ -272,69 +227,7 @@ extension GameScene: StateDelegate {
         }else {
             print("TERMINADO OS PONTOS QUE O CACHORRO DEVERIA PASSAR....")
         }
-        
-        
-        
-        
-        
-        
-//        if !StateHelper.nodeStack.IsEmpty() {
-//            if state == farejando {
-//                print("Deu sucesso no farejando")
-//                if StateHelper.temQueMijar {
-//                    if machineState?.enter(Mijando.self) == false {
-//                        print("Nao foi possivel entrar no estao de mijando")
-//                    }else{
-//                        if machineState?.enter(Girando.self) == false {
-//                            print("Nao foi possivel entrar no estado de girando")
-//                        }
-//                    }
-//                } //fecha o if tem que mijar
-//            }else if state == girando {
-//                print("Deu sucfesso no girando")
-//                if machineState?.enter(Andando.self) == false {
-//                    print("Indo para o estado de andando...")
-//                }
-//            } else if state == andando {
-//                if machineState?.enter(Farejando.self) == false {
-//                    print("Indo para o estado de farejando novamente...")
-//                }
-//            }
-//        }else {
-//            print("TERMINARAM OS PONTOS....")
-//        }
-//        
-        
-        
-        
-//        if !StateHelper.nodeStack.IsEmpty(){
-//        
-//            if state == farejando {
-//                print("Deu sucesso no farejando")
-//                if machineState?.enter(Girando.self) == false{
-//                    print("Indo para o estado girando...")
-//                }else if state == mijando {
-//                    print("Indo para o estado de mijando...")
-//                    if machineState?.enter(Mijando.self) == false {
-//                        print("Deu sucesso no mijando...")
-//                    }
-//                    StateHelper.temQueMijar = false
-//                }
-//            }else if state == girando{
-//                print("Deu sucfesso no girando")
-//                if machineState?.enter(Andando.self) == false {
-//                    print("Indo para o estado de andando...")
-//                }
-//            }else if state == andando {
-//                print("Deu sucesso no andando")
-//                if machineState?.enter(Farejando.self) == false {
-//                    print("Indo para o estado de farejando novamente...")
-//                }
-//            }
-//        }else {
-//            print("TERMINADO OS PONTOS QUE O CACHORRO DEVERIA PASSAR...")
-//        }
-    }
+}
     
     
     
