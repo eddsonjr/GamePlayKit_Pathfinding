@@ -109,24 +109,8 @@ class Mijando: GKState {
         print("[STATE] >> Mijando")
         
         
-        
-        /*Talvez o alerta do botao nao possa ficar aqui*/
-        let appearance = SCLAlertView.SCLAppearance(
-            showCloseButton: false
-        )
-        let alert = SCLAlertView(appearance: appearance)
-        alert.addButton(NSLocalizedString("Ok", comment: "Ok"), action: {
-            print("Botao do alerta do xixi pressionado!")
-            StateHelper.temQueMijar = false
-            StateHelper.stateInAction = false
-            self.stateDelegate?.stateDelegateSuccess(self)
-            
-            
-        })
-        
-        alert.showWarning(NSLocalizedString("Oops!", comment: "Opa!"), subTitle: NSLocalizedString("Your pet peed out of the crib. You must take an action.", comment: "O seu pet fez xixi fora do berço. Você deve fazer uma ação."))
-        
-
+         self.stateDelegate?.stateDelegateSuccess(self)
+     
         
         
     }

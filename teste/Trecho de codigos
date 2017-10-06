@@ -350,3 +350,31 @@ func stateDelegateFail(_ state: GKState) {
 
 
 
+
+
+
+
+
+
+
+let appearance = SCLAlertView.SCLAppearance(
+showCloseButton: false
+)
+let alert = SCLAlertView(appearance: appearance)
+alert.addButton(NSLocalizedString("Ok", comment: "Ok"), action: {
+print("Botao do alerta do xixi pressionado!")
+if self.machineState?.enter(Farejando.self) == false {
+print("Após pressionar o botao de ok na limpeza do xixi.")
+}
+})
+
+alert.showWarning(NSLocalizedString("Oops!", comment: "Opa!"), subTitle: NSLocalizedString("Your pet peed out of the crib. You must take an action.", comment: "O seu pet fez xixi fora do berço. Você deve fazer uma ação."))
+
+
+
+
+
+}
+
+
+

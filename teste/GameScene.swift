@@ -58,17 +58,18 @@ class GameScene: SKScene {
         self.machineState = GKStateMachine(states: [farejando,girando,andando,mijando])
         
         
-        if !StateHelper.stateInAction {
-                if machineState?.enter(Farejando.self) == false {
-                    print("Deu erro ao entrar no estado de farejando. Nao foi possivel entrar nele.")
-                }
-            StateHelper.stateInAction = true
+        StateHelper.temQueMijar = true
+        
+        //Inicializando a maquina de estados
+        if machineState?.enter(Farejando.self) == false {
+            print("Nao foi possivel inicializar o estado de farejando, logo o animal no pode percorrer o path.")
         }
-
-        
-        
         
     }
+    
+    
+    
+    
     
     
     override func sceneDidLoad() {
@@ -110,12 +111,13 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         
-//        if StateHelper.nodeStack.items.count == 3 {
-//            print("TESTE DE MIJANDO, FAZENDO O CACHORRO MIJAR > Estado atual: \(machineState?.currentState)")
-//            StateHelper.temQueMijar = true
-//            StateHelper.stateInAction = true
-//        }
         
+        
+        if StateHelper.nodeStack.items.count == 3 {
+            print("TESTE DE MIJANDO, FAZENDO O CACHORRO MIJAR > Estado atual: \(machineState?.currentState)")
+            StateHelper.temQueMijar = true
+    
+        }
         
 //        
 //        if !StateHelper.stateInAction {
@@ -165,6 +167,24 @@ class GameScene: SKScene {
     }
     
     
+    func chamarAlertaDeXixiFeito() {
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: false
+        )
+        let alert = SCLAlertView(appearance: appearance)
+        alert.addButton(NSLocalizedString("Ok", comment: "Ok"), action: {
+            print("Botao do alerta do xixi pressionado!")
+            StateHelper.temQueMijar = false
+            if self.machineState?.enter(Girando.self) == false {
+                print("Naou entrou no girando dentro do botao...")
+            }
+        })
+        
+        alert.showWarning(NSLocalizedString("Oops!", comment: "Opa!"), subTitle: NSLocalizedString("Your pet peed out of the crib. You must take an action.", comment: "O seu pet fez xixi fora do berço. Você deve fazer uma ação."))
+
+    }
+    
+    
     
     //Mark: Esta funcao serve para manipular o animal, fazendo ele andar e controlando seus estados
     func controlarCachorro() {
@@ -198,11 +218,13 @@ extension GameScene: StateDelegate {
             case farejando:
                 print("Deu sucesso no farejando. Verificando se tem que mijar ou nao...")
                 if StateHelper.temQueMijar { //verifica se tem que mijar neste ponto
-                    print("Tem que mijar neste ponto. Chamando o estado de mijar...")
+                    print("Tem que mijar neste ponto. Chamando o estado de mijar... | Cond: \(StateHelper.temQueMijar)")
                     if machineState?.enter(Mijando.self) == false { //se tiver que mijar, entra no estao de mijando
                         print("Nao foi possivel entrar no estado de mijando. Talvez nao tenha que fazer neste ponto...")
                     }
+                    chamarAlertaDeXixiFeito()
                 }else{
+                    print("Terminou de mijar. Chamando o estado de girando... | Cond: \(StateHelper.temQueMijar)")
                     if machineState?.enter(Girando.self) == false { //caso contrario passa para o estado de girando.
                         print("Nao foi possivel entrar no estado de girando...")
                     }
@@ -218,6 +240,11 @@ extension GameScene: StateDelegate {
                 print("Deu sucesso no andando. Chamando o estado de farejando...")
                 if machineState?.enter(Farejando.self) == false {
                     print("Nao foi possivel entrar no estado de andar")
+                }
+            case mijando:
+                print("Deu sucesso no mijando. Chamando o estado de girando...")
+                if machineState?.enter(Girando.self) == false {
+                    print("Nao foi possivel entrar no estao de andar.")
                 }
                 
             default:
@@ -237,3 +264,12 @@ extension GameScene: StateDelegate {
     }
     
 }
+
+
+
+
+
+
+
+
+
